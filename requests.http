@@ -1,0 +1,19 @@
+GET http://localhost:3000/api/locations/224/printers
+
+###
+
+POST http://localhost:3000/api/printers
+Content-Type: application/json
+
+  {
+      "name": "PR-224-003",
+      "ip": "192.168.224.53",
+      "port": 9100,
+      "model_id": 1,
+      "location_id": 1,
+      "active": true
+  }
+
+###
+
+GET http://localhost:3000/api/printers

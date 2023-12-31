@@ -15,7 +15,7 @@ use sea_orm::DatabaseConnection;
 
 use crate::{
     controllers,
-    models::_entities::{notes, users},
+    models::_entities::{locations, makes, models, printers, users},
     tasks,
     workers::downloader::DownloadWorker,
 };
@@ -43,10 +43,14 @@ impl Hooks for App {
 
     fn routes() -> AppRoutes {
         AppRoutes::with_default_routes()
-            .prefix("/api")
+            .add_route(controllers::printer::routes())
+            .add_route(controllers::location::routes())
+            .add_route(controllers::model::routes())
+            .add_route(controllers::make::routes())
             .add_route(controllers::notes::routes())
             .add_route(controllers::auth::routes())
             .add_route(controllers::user::routes())
+            .prefix("/api")
     }
 
     fn connect_workers<'a>(p: &'a mut Processor, ctx: &'a AppContext) {
@@ -59,13 +63,22 @@ impl Hooks for App {
 
     async fn truncate(db: &DatabaseConnection) -> Result<()> {
         truncate_table(db, users::Entity).await?;
-        truncate_table(db, notes::Entity).await?;
+        truncate_table(db, makes::Entity).await?;
+        truncate_table(db, models::Entity).await?;
+        truncate_table(db, locations::Entity).await?;
+        truncate_table(db, printers::Entity).await?;
         Ok(())
     }
 
     async fn seed(db: &DatabaseConnection, base: &Path) -> Result<()> {
         db::seed::<users::ActiveModel>(db, &base.join("users.yaml").display().to_string()).await?;
-        db::seed::<notes::ActiveModel>(db, &base.join("notes.yaml").display().to_string()).await?;
+        db::seed::<makes::ActiveModel>(db, &base.join("makes.yaml").display().to_string()).await?;
+        db::seed::<models::ActiveModel>(db, &base.join("models.yaml").display().to_string())
+            .await?;
+        db::seed::<locations::ActiveModel>(db, &base.join("locations.yaml").display().to_string())
+            .await?;
+        db::seed::<printers::ActiveModel>(db, &base.join("printers.yaml").display().to_string())
+            .await?;
         Ok(())
     }
 }
