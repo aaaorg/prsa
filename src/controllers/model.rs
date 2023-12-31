@@ -11,6 +11,7 @@ pub struct Params {
     pub name: String,
     pub driver: String,
     pub active: bool,
+    pub make_id: i32,
 }
 
 impl Params {
@@ -18,6 +19,7 @@ impl Params {
         item.name = Set(self.name.clone());
         item.driver = Set(self.driver.clone());
         item.active = Set(self.active.clone());
+        item.make_id = Set(self.make_id.clone());
     }
 }
 

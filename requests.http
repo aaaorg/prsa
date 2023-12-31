@@ -1,4 +1,34 @@
-GET http://localhost:3000/api/locations/224/printers
+POST http://localhost:3000/api/locations
+Content-Type: application/json
+
+{
+  "name": "Praha",
+  "code": 11000,
+  "ip_code": 100,
+  "active": true
+}
+
+###
+
+POST http://localhost:3000/api/makes
+Content-Type: application/json
+
+{
+  "name": "Brother",
+  "active": true
+}
+
+###
+
+POST http://localhost:3000/api/models
+Content-Type: application/json
+
+{
+  "name": "MFC-L2712DW",
+  "driver": "BrotherMFC-L2712DW.ppd",
+  "make_id": 2,
+  "active": true
+}
 
 ###
 
@@ -6,13 +36,29 @@ POST http://localhost:3000/api/printers
 Content-Type: application/json
 
   {
-      "name": "PR-224-003",
-      "ip": "192.168.224.53",
+      "name": "PR-100-001",
+      "ip": "192.168.100.51",
       "port": 9100,
-      "model_id": 1,
-      "location_id": 1,
+      "model_id": 2,
+      "location_id": 3,
       "active": true
   }
+
+###
+
+GET http://localhost:3000/api/locations/123/printers
+
+###
+
+GET http://localhost:3000/api/makes
+
+###
+
+GET http://localhost:3000/api/models
+
+###
+
+GET http://localhost:3000/api/locations
 
 ###
 
