@@ -1,6 +1,6 @@
 use loco_rs::cli;
-use prsa::app::App;
 use migration::Migrator;
+use prsa::app::App;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
