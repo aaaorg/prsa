@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::models::_entities::{
     locations::{ActiveModel, Column, Entity, Model},
-    printers,
+    models, printers,
 };
 use crate::views::printer::PrinterCupsParams;
 
@@ -45,15 +45,22 @@ pub async fn list_printers_in_location(
         .filter(Condition::all().add(Column::IpCode.eq(ip_code)))
         .all(&ctx.db)
         .await?;
+
+    if location.is_empty() {
+        return Err(Error::NotFound);
+    }
+
     let printers = location
         .first()
         .unwrap()
         .find_related(printers::Entity)
+        .find_also_related(models::Entity)
         .all(&ctx.db)
         .await?;
+
     let printers = printers
         .into_iter()
-        .map(|printer| PrinterCupsParams::new(&printer))
+        .map(|printer| PrinterCupsParams::new(&printer.0, &printer.1.unwrap()))
         .collect();
     format::json(printers)
 }

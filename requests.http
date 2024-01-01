@@ -1,14 +1,16 @@
+### Add new location
+
 POST http://localhost:3000/api/locations
 Content-Type: application/json
 
 {
   "name": "Praha",
-  "code": 11000,
-  "ip_code": 100,
+  "code": 11111,
+  "ip_code": 101,
   "active": true
 }
 
-###
+### Add new make
 
 POST http://localhost:3000/api/makes
 Content-Type: application/json
@@ -18,7 +20,7 @@ Content-Type: application/json
   "active": true
 }
 
-###
+### Add new model
 
 POST http://localhost:3000/api/models
 Content-Type: application/json
@@ -30,7 +32,7 @@ Content-Type: application/json
   "active": true
 }
 
-###
+### Add new printer
 
 POST http://localhost:3000/api/printers
 Content-Type: application/json
@@ -40,26 +42,34 @@ Content-Type: application/json
       "ip": "192.168.100.51",
       "port": 9100,
       "model_id": 2,
-      "location_id": 3,
+      "location_id": 1,
       "active": true
   }
 
-###
+### Get printers for location with printers
 
-GET http://localhost:3000/api/locations/123/printers
+GET http://localhost:3000/api/locations/1/printers
 
-###
+### Get printers for location without printers
+
+GET http://localhost:3000/api/locations/101/printers
+
+### Get printers for non-existing location
+
+GET http://localhost:3000/api/locations/999/printers
+
+### Get makes
 
 GET http://localhost:3000/api/makes
 
-###
+### Get models
 
 GET http://localhost:3000/api/models
 
-###
+### Get locations
 
 GET http://localhost:3000/api/locations
 
-###
+### Get printers
 
 GET http://localhost:3000/api/printers
